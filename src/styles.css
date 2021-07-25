@@ -1,7 +1,42 @@
 
+* {
+  margin: 0;
+  padding: 0;
+}
 
-body {
-  display: flex;
+#title {
+  margin: auto;
+  margin-left: 0;
+}
+
+button {
+  border: 1px solid black;
+  height: 50px;
+  width: 150px;
+  padding: 10px;
+  background-color: white;
+  background-color: #9c9c9c42;
+  border-radius: 5px;
+  box-sizing: border-box;
+  
+  font-size: 14px;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  margin: 20px;
+  transition: all 0.2s ease;
+  /* background: black;
+  color: white; */
+}
+
+button:hover:not(button:disabled) {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+
+
+button:last-of-type {
+  margin-right: 0px;
 }
 
 figure {
@@ -14,14 +49,22 @@ figure {
 }
 
 #images--container {
-  width: 450px;
+  /* width: 450px; */
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);
   justify-content: center;
   grid-gap: 20px;
   max-width: 1200px;
-  width: 95vw;
+  width: 90%;
   margin: auto;
+/* 
+  display: flex;
+  flex-wrap: wrap; */
+}
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
 }
 
 .photo {
@@ -29,7 +72,21 @@ figure {
   border: 1px solid black;
   border-radius: 5px;
   overflow: hidden;
+  opacity: 0;
+  animation: fadeIn .3s 1 ease;
+  animation-fill-mode: forwards;
 }
+
+.photo:nth-of-type(1) { animation-delay: 0.0s }
+.photo:nth-of-type(2) { animation-delay: 0.1s }
+.photo:nth-of-type(3) { animation-delay: 0.2s }
+.photo:nth-of-type(4) { animation-delay: 0.3s }
+.photo:nth-of-type(5) { animation-delay: 0.4s }
+.photo:nth-of-type(6) { animation-delay: 0.45s }
+.photo:nth-of-type(7) { animation-delay: 0.5s }
+.photo:nth-of-type(8) { animation-delay: 0.6s }
+.photo:nth-of-type(9) { animation-delay: 0.65s }
+.photo:nth-of-type(10) { animation-delay: 0.7s }
 
 .photo:hover {
   box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
@@ -40,14 +97,14 @@ figure {
   width: 200px;
   box-sizing: border-box;
   padding: 20px;
-  transition: .1s transform ease;
+  transition: .3s transform ease;
   cursor: pointer;
   border-radius: 25px;
  
 }
 
 .photo__img:hover {
-  transform: scale(1.005);
+  transform: scale(1.075);
 }
 
 .hidden {
@@ -56,4 +113,9 @@ figure {
   height: 0;
 }
 
+.btns-container {
+  /* width: 100%; */
+    /* justify-content: center; */
+    display: flex;
+}
 
