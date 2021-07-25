@@ -45,8 +45,6 @@ document.querySelector('.btn-close-modal').addEventListener('click', (ev) => {
   document.querySelector('.modal-overlay').classList.add("d-none");
 })
 
-
-
 const addThumbnail = (image) => {
 
   if (!image) return;
@@ -55,18 +53,27 @@ const addThumbnail = (image) => {
   photoElem.className = "photo";
 
   photoElem.onclick = (ev) => {
+    const modalImages = document.querySelectorAll('.modal__image');
+    modalImages.forEach(image => {
+        image.classList.add('d-none')
+    })
     document.querySelector('.modal-overlay').classList.remove("d-none");
-    console.log('images', images)
     const imgId = ev.currentTarget.dataset.imgId;
     const findSelectedImage = (_images) => {
-      return _images.find(image => image.id === parseInt(imgId))
+      return _images.find(image => `${image.id}` === `${imgId}`)
     }
 
     const selectedImage = findSelectedImage(images);
+    modalImages.forEach(image => {
+      const isSelectedImg = image.dataset.imgId === imgId;
 
-    console.log('target', ev.currentTarget.dataset.imgId)
-    if (!images[0]) return;
-    console.log('image[0].largeImageURL', images[0].largeImageURL)
+      if(isSelectedImg) {
+        image.classList.remove('d-none')
+      } 
+  
+    })
+
+    img.classList.remove('d-none');
     document.getElementById('modal__image').src = selectedImage.largeImageURL
   }
 
@@ -93,6 +100,14 @@ const fetchImagesAndRenderToDom = async (pageNum) => {
   setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= imagesPerPage)
   images.slice(0, 10).forEach(image => {
     addThumbnail(image)
+
+    const modalImageBg =  document.getElementById('modal__image__bg')
+    const img = document.createElement('img');
+    img.classList.add('modal__image');
+    img.classList.add('d-none');
+    img.src = image.largeImageURL;
+    img.setAttribute('data-img-id', image.id);
+    modalImageBg.append(img)
   })
 }
 
