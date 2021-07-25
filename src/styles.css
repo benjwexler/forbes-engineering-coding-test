@@ -1,0 +1,59 @@
+
+
+body {
+  display: flex;
+}
+
+figure {
+  margin: 0 auto;
+  margin-block-start: unset;
+  margin-block-end: unset;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+
+}
+
+#images--container {
+  width: 450px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: center;
+  grid-gap: 20px;
+  max-width: 1200px;
+  width: 95vw;
+  margin: auto;
+}
+
+.photo {
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.photo:hover {
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
+}
+
+.photo__img {
+  height: 200px;
+  width: 200px;
+  box-sizing: border-box;
+  padding: 20px;
+  transition: .1s transform ease;
+  cursor: pointer;
+  border-radius: 25px;
+ 
+}
+
+.photo__img:hover {
+  transform: scale(1.005);
+}
+
+.hidden {
+  visibility: hidden;
+  margin: 0 5px;
+  height: 0;
+}
+
+
