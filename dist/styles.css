@@ -14,14 +14,35 @@
 
 .btn-close-modal {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 7px;
+  right: 7px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
+  /* transition: transform 0.2s linear; */
     /* border: 1px solid black; */
     /* padding: 10px;
     border-radius: 5px; */
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    padding: 5px;
+    transition: all 0.2s linear;
+    
+
+}
+
+.btn-close-modal:hover {
+  /* border-color: #c6c6c6b5; */
+  /* background: #dfdcdc;
+  background-color: #9c9c9c42; */
+  /* background: #dfdcdc69; */
+  background: rgb(247, 247, 247);
+  border-color: #c6c6c626;
+  transform: rotate(
+90deg
+);
+  /* transform: scale(1.05) */
 }
 
 .modal-overlay {

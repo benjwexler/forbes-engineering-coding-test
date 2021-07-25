@@ -1,7 +1,6 @@
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import "./styles.css";
 
 const addQueryParams = (paramsObj = {}) => {
   const keys = Object.keys(paramsObj);
@@ -13,6 +12,7 @@ const removeElements = (elms) => elms.forEach(el => el.remove());
 let currentPage = 1;
 const imagesPerPage = 10;
 let images = [];
+let latestFetchTimestamp = Date.now();
 
 const fetchImages = async ({ page = 1, perPage }) => {
   const queryParamsObj = {
@@ -93,8 +93,15 @@ const setButtonEnabledStatusAfterPageChange = (btnElement, bool) => {
 }
 
 const fetchImagesAndRenderToDom = async (pageNum) => {
-  images = await fetchImages({ page: pageNum, perPage: imagesPerPage });
-  console.log('images', images)
+  latestFetchTimestamp = Date.now();
+  const currentTimestamp = latestFetchTimestamp;
+  const fetchedImages = await fetchImages({ page: pageNum, perPage: imagesPerPage });
+
+  // If these values are different it means another request has occured while we were
+  // awaiting this one, and that means its stale, so let's return early and do nothing
+  if (currentTimestamp !== latestFetchTimestamp) return;
+
+  images = fetchedImages;
   const nextBtn = document.getElementById('btn--next');
   // If the number of images is less than imagesPerPage we are making the assumption we are on the last page
   setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= imagesPerPage)
