@@ -12,6 +12,7 @@ const removeElements = (elms) => elms.forEach(el => el.remove());
 
 let currentPage = 1;
 const imagesPerPage = 10;
+let images = [];
 
 const fetchImages = async ({ page = 1, perPage }) => {
   const queryParamsObj = {
@@ -25,21 +26,58 @@ const fetchImages = async ({ page = 1, perPage }) => {
   const queryParams = addQueryParams(queryParamsObj);
   const baseUrl = 'https://pixabay.com/api';
   const fullUrl = `${baseUrl}?${queryParams}`;
-  const res = await fetch(fullUrl);
-  const data = await res.json()
-  return data.hits;
+
+  try {
+    const res = await fetch(fullUrl);
+    const data = await res.json()
+    return data.hits;
+  } catch {
+    return [];
+  }
 }
 
-const addThumbnail = (imgSrc) => {
-  const figure = document.createElement('div');
-  figure.className = "photo";
+document.querySelector('.modal-overlay').addEventListener('click', (ev) => {
+  if (document.getElementById('modal__image__bg').contains(ev.target)) return;
+  document.querySelector('.modal-overlay').classList.add("d-none");
+})
+
+document.querySelector('.btn-close-modal').addEventListener('click', (ev) => {
+  document.querySelector('.modal-overlay').classList.add("d-none");
+})
+
+
+
+const addThumbnail = (image) => {
+
+  if (!image) return;
+
+  const photoElem = document.createElement('div');
+  photoElem.className = "photo";
+
+  photoElem.onclick = (ev) => {
+    document.querySelector('.modal-overlay').classList.remove("d-none");
+    console.log('images', images)
+    const imgId = ev.currentTarget.dataset.imgId;
+    const findSelectedImage = (_images) => {
+      return _images.find(image => image.id === parseInt(imgId))
+    }
+
+    const selectedImage = findSelectedImage(images);
+
+    console.log('target', ev.currentTarget.dataset.imgId)
+    if (!images[0]) return;
+    console.log('image[0].largeImageURL', images[0].largeImageURL)
+    document.getElementById('modal__image').src = selectedImage.largeImageURL
+  }
+
+  photoElem.setAttribute('data-img-id', image.id);
   const img = document.createElement('img');
-  img.src = imgSrc;
+  img.src = image.previewURL;
   img.className = "photo__img";
-  figure.append(img)
+  photoElem.append(img);
 
   const imagesContainer = document.getElementById('images--container')
-  imagesContainer.append(figure)
+  imagesContainer.append(photoElem)
 }
 
 const setButtonEnabledStatusAfterPageChange = (btnElement, bool) => {
@@ -48,12 +86,13 @@ const setButtonEnabledStatusAfterPageChange = (btnElement, bool) => {
 }
 
 const fetchImagesAndRenderToDom = async (pageNum) => {
-  const images = await fetchImages({ page: pageNum, perPage: imagesPerPage });
+  images = await fetchImages({ page: pageNum, perPage: imagesPerPage });
+  console.log('images', images)
   const nextBtn = document.getElementById('btn--next');
   // If the number of images is less than imagesPerPage we are making the assumption we are on the last page
   setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= imagesPerPage)
   images.slice(0, 10).forEach(image => {
-    addThumbnail(image.previewURL)
+    addThumbnail(image)
   })
 }
 

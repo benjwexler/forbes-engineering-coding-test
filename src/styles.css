@@ -8,6 +8,87 @@
   padding: 0;
 }
 
+.d-none {
+  display: none !important;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+    /* border: 1px solid black; */
+    /* padding: 10px;
+    border-radius: 5px; */
+}
+
+.modal-overlay {
+  position: fixed;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vw;
+  background-color: rgba(0, 0, 0, 0.37);
+  background-color: rgba(0, 0, 0, 0.767);
+  z-index: 1;
+  top: 0;
+  white-space: nowrap; /* This is required unless you put the helper span closely near the img */
+
+    text-align: center;
+}
+
+.modal__image__container {
+  /* width: 50%;
+  margin: auto;
+  position: relative; */
+  display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    margin: auto;
+    overflow: auto;
+}
+
+#modal__image__bg {
+  margin: 75px;
+    border: 1px solid black;
+    background: white;
+    border-radius: 5px;
+    padding: 50px;
+    width: 80%;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
+    box-sizing: border-box;
+    max-width: 1090px;
+    min-height: 400px;
+    position: relative;
+
+}
+
+#modal__image {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  vertical-align: middle;
+  margin: auto;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 1000px;
+    object-fit: contain;
+    height: 100%;
+    /* margin: 75px;
+    border: 1px solid black;
+    background: white;
+    border-radius: 5px;
+    padding: 25px; */
+}
+
 #title {
   margin: auto;
   margin-left: 0;
@@ -66,6 +147,12 @@ button:last-of-type {
 
   button:last-of-type {
     margin-right: 20px;
+  }
+
+  #modal__image__bg {
+    margin: 50px 0px;
+    width: 95%;
+    min-height: none;
   }
 }
 
