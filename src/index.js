@@ -31,6 +31,36 @@ export const fetchImages = async ({ page }) => {
     return { ok: false, collection: [] };
   }
 }
+
+const addThumbnailsInLoadingState = (thumbnailsPerPage) => {
+
+  const createThumbnail = (num) => {
+  const photo = document.createElement('div');
+  photo.className="photo";
+  photo.setAttribute('data-photo-num', num);
+  
+  const skeletonThumbnailContainer = document.createElement('div');
+  skeletonThumbnailContainer.className = "skeleton-thumbnail-container";
+  
+  const skeletonThumbnail = document.createElement('div');
+  skeletonThumbnail.className = "skeleton-thumbnail";
+  skeletonThumbnail.style.animationDelay = `0.${num}s`;
+  skeletonThumbnailContainer.append(skeletonThumbnail);
+
+  const photoImg = document.createElement('img');
+  photoImg.className="photo-img";
+
+  photo.append(skeletonThumbnailContainer)
+  photo.append(photoImg)
+
+  document.getElementById('images-container').append(photo);
+
+  }
+
+  for(let i = 1; i <= thumbnailsPerPage; i++) {
+    createThumbnail(i)
+  }
+}
 const runCode = async () => {
   let currentPage = 1;
   let images = [];
@@ -116,24 +146,15 @@ const runCode = async () => {
   }
 
   const resetImagesToLoadingState = () => {
+    removeElements(document.querySelectorAll('.photo'))
     removeElements(document.querySelectorAll(".modal-image"));
-    const allImageContainers = document.querySelectorAll(".photo");
-    allImageContainers.forEach(imageContainer => {
-    imageContainer.classList.remove('loaded');
-    imageContainer.classList.remove('fade-out');
-    })
-  
-    const allImages = document.querySelectorAll(".photo-img");
-  
-    allImages.forEach(image => {
-      image.onload = () => { };
-    })
-  
   }
 
   const updateStateFetchAndRenderImages = async () => {
     upDatePaginationBtnsEnabledState();
+    
     resetImagesToLoadingState();
+    addThumbnailsInLoadingState(10)
     await fetchImagesAndRenderToDom();
     upDatePaginationBtnsEnabledState();
   }
@@ -153,6 +174,9 @@ const runCode = async () => {
   })
 
   updateStateFetchAndRenderImages();
+
+  // await fetchImagesAndRenderToDom();
+  // upDatePaginationBtnsEnabledState();
 
   const modalOverlayElem = document.querySelector('.modal-overlay');
 

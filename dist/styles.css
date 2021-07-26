@@ -179,7 +179,8 @@
 }
 
 .skeleton-thumbnail {
-  background: linear-gradient(270deg, #d3d0d070, #ffffff);
+  /* background: linear-gradient(270deg, #d3d0d070, #ffffff); */
+  background: linear-gradient(270deg, #d3d0d070, #fdfdfd);
   background-size: 400% 400%;
   height: 100%;
   width: 100%;
