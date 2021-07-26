@@ -8,33 +8,33 @@ const addQueryParams = (paramsObj = {}) => {
   return keys.map(key => `${key}=${paramsObj[key]}`).join('&');
 }
 
+const imagesPerPage = 10;
+
+export const fetchImages = async ({ page }) => {
+  const queryParamsObj = {
+    key: '22651127-6c7d16fdb5ebe111783afec3c',
+    q: 'Movies',
+    orientation: "vertical",
+    'per_page': imagesPerPage,
+    page,
+  };
+
+  const queryParams = addQueryParams(queryParamsObj);
+  const baseUrl = 'https://pixabay.com/api';
+  const fullUrl = `${baseUrl}?${queryParams}`;
+
+  try {
+    const res = await fetch(fullUrl);
+    const data = await res.json()
+    return { ok: true, collection: data.hits };
+  } catch {
+    return { ok: false, collection: [] };
+  }
+}
 const runCode = async () => {
   let currentPage = 1;
   let images = [];
   let latestFetchTimestamp = Date.now();
-  const imagesPerPage = 10;
-
-  const fetchImages = async ({ page }) => {
-    const queryParamsObj = {
-      key: '22651127-6c7d16fdb5ebe111783afec3c',
-      q: 'Movies',
-      orientation: "vertical",
-      'per_page': imagesPerPage,
-      page,
-    };
-
-    const queryParams = addQueryParams(queryParamsObj);
-    const baseUrl = 'https://pixabay.com/api';
-    const fullUrl = `${baseUrl}?${queryParams}`;
-
-    try {
-      const res = await fetch(fullUrl);
-      const data = await res.json()
-      return { ok: true, collection: data.hits };
-    } catch {
-      return { ok: false, collection: [] };
-    }
-  }
 
   const nextBtn = document.getElementById('btn--next');
   const previousBtn = document.getElementById('btn--previous');
@@ -51,16 +51,15 @@ const runCode = async () => {
 
     images = fetchedImages.collection;
 
-    const createModalImage = (_image) => {
+    const createHiddenModalImage = (_image) => {
       const modalImageBg = document.getElementById('modal-image-bg');
       const modalImg = document.createElement('img');
       modalImg.classList.add('modal-image');
       modalImg.classList.add('d-none');
       modalImg.src = _image.largeImageURL;
       modalImg.setAttribute('data-img-id', _image.id);
-      modalImageBg.append(modalImg)
+      modalImageBg.append(modalImg);
     };
-    
 
     images.forEach((image, i) => {
       const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
@@ -68,12 +67,12 @@ const runCode = async () => {
       const img = photo.querySelector(".photo-img");
       img.src = image.previewURL;
       img.onload = function (ev) {
-        photo.classList.add('loaded')
+        photo.classList.add('loaded');
       };
       photo.onclick = (ev) => {
         const modalImages = document.querySelectorAll('.modal-image');
         modalImages.forEach(image => {
-          image.classList.add('d-none')
+          image.classList.add('d-none');
         })
         // img hasn't loaded so don't show the modal
         if(!ev.currentTarget.classList.contains('loaded')) return;
@@ -84,7 +83,7 @@ const runCode = async () => {
           const isSelectedImg = image.dataset.imgId === imgId;
 
           if (isSelectedImg) {
-            image.classList.remove('d-none')
+            image.classList.remove('d-none');
           }
         })
       }
@@ -93,7 +92,7 @@ const runCode = async () => {
       // Each modal img will be hidden untill it is selected
       // We are creating the images at the same time the thumbnail is rendered, so the modal img
       // doesn't have to load when the modal is open and can be loaded behind the scenes
-      createModalImage(image);
+      createHiddenModalImage(image);
     })
 
   // If there are less images than the max amount per page, we have to make sure no images
@@ -101,26 +100,9 @@ const runCode = async () => {
     if (images.length < imagesPerPage) {
       for (let i = images.length; i < 10; i++) {
         const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
-        // photo.classList.add('d-none');
         photo.classList.add('fade-out');
       }
     }
-  }
-
-  const resetImagesToLoadingState = () => {
-    removeElements(document.querySelectorAll(".modal-image"));
-    const allImageContainers = document.querySelectorAll(".photo");
-    allImageContainers.forEach(imageContainer => {
-      imageContainer.classList.remove('loaded');
-      imageContainer.classList.remove('fade-out');
-    })
-
-    const allImages = document.querySelectorAll(".photo-img");
-
-    allImages.forEach(image => {
-      image.onload = () => { };
-    })
-
   }
 
   const setButtonEnabledStatusAfterPageChange = (btnElement, bool) => {
@@ -131,6 +113,22 @@ const runCode = async () => {
   const upDatePaginationBtnsEnabledState = () => {
     setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= 10)
     setButtonEnabledStatusAfterPageChange(previousBtn, currentPage > 1)
+  }
+
+  const resetImagesToLoadingState = () => {
+    removeElements(document.querySelectorAll(".modal-image"));
+    const allImageContainers = document.querySelectorAll(".photo");
+    allImageContainers.forEach(imageContainer => {
+    imageContainer.classList.remove('loaded');
+    imageContainer.classList.remove('fade-out');
+    })
+  
+    const allImages = document.querySelectorAll(".photo-img");
+  
+    allImages.forEach(image => {
+      image.onload = () => { };
+    })
+  
   }
 
   const updateStateFetchAndRenderImages = async () => {
@@ -154,7 +152,7 @@ const runCode = async () => {
     updateStateFetchAndRenderImages();
   })
 
-  updateStateFetchAndRenderImages()
+  updateStateFetchAndRenderImages();
 
   const modalOverlayElem = document.querySelector('.modal-overlay');
 
@@ -167,7 +165,11 @@ const runCode = async () => {
     modalOverlayElem.classList.add("d-none");
   })
 
-  updateStateFetchAndRenderImages()
+  updateStateFetchAndRenderImages();
 }
 
-runCode();
+document.addEventListener('DOMContentLoaded', function () {
+  runCode();
+})
+
+
