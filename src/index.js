@@ -16,7 +16,7 @@ const runCode = async () => {
 
   const fetchImages = async ({ page }) => {
     const queryParamsObj = {
-      key: '22638056-d088870190bfd9698c73834e3',
+      key: '22651127-6c7d16fdb5ebe111783afec3c',
       q: 'Movies',
       orientation: "vertical",
       'per_page': imagesPerPage,
@@ -75,6 +75,8 @@ const runCode = async () => {
         modalImages.forEach(image => {
           image.classList.add('d-none')
         })
+        // img hasn't loaded so don't show the modal
+        if(!ev.currentTarget.classList.contains('loaded')) return;
         document.querySelector('.modal-overlay').classList.remove("d-none");
         const imgId = ev.currentTarget.dataset.imgId;
 
@@ -99,7 +101,8 @@ const runCode = async () => {
     if (images.length < imagesPerPage) {
       for (let i = images.length; i < 10; i++) {
         const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
-        photo.classList.add('d-none');
+        // photo.classList.add('d-none');
+        photo.classList.add('fade-out');
       }
     }
   }
@@ -109,7 +112,7 @@ const runCode = async () => {
     const allImageContainers = document.querySelectorAll(".photo");
     allImageContainers.forEach(imageContainer => {
       imageContainer.classList.remove('loaded');
-      imageContainer.classList.remove('d-none');
+      imageContainer.classList.remove('fade-out');
     })
 
     const allImages = document.querySelectorAll(".photo-img");

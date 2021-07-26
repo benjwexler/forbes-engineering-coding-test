@@ -129,9 +129,9 @@
   margin: auto;
 }
 
-@keyframes fadeIn {
-  from {opacity: .7;}
-  to {opacity: 1;}
+@keyframes fadeOut {
+  from {opacity: 1; visibility: visible}
+  to {opacity: 0; visibility: hidden;}
 }
 
 .photo {
@@ -150,6 +150,12 @@
   position: relative;
   height: var(--img-size);
   width: var(--img-size);
+}
+
+.fade-out {
+  animation: fadeOut 1s 1 ease;
+  animation-fill-mode: forwards; 
+  
 }
 
 .skeleton-thumbnail-container {
