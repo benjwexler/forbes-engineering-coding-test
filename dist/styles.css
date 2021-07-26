@@ -19,30 +19,17 @@
   font-weight: bold;
   cursor: pointer;
   display: flex;
-  /* transition: transform 0.2s linear; */
-    /* border: 1px solid black; */
-    /* padding: 10px;
-    border-radius: 5px; */
-    border-radius: 50%;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-    padding: 5px;
-    transition: all 0.2s linear;
-    
-
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  padding: 5px;
+  transition: all 0.2s linear;
 }
 
 .btn-close-modal:hover {
-  /* border-color: #c6c6c6b5; */
-  /* background: #dfdcdc;
-  background-color: #9c9c9c42; */
-  /* background: #dfdcdc69; */
   background: rgb(247, 247, 247);
   border-color: #c6c6c626;
-  transform: rotate(
-90deg
-);
-  /* transform: scale(1.05) */
+  transform: rotate(90deg);
 }
 
 .modal-overlay {
@@ -50,45 +37,38 @@
   width: 100vw;
   min-height: 100vh;
   height: 100vw;
-  background-color: rgba(0, 0, 0, 0.37);
   background-color: rgba(0, 0, 0, 0.767);
   z-index: 1;
   top: 0;
-  white-space: nowrap; /* This is required unless you put the helper span closely near the img */
-
-    text-align: center;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .modal__image__container {
-  /* width: 50%;
-  margin: auto;
-  position: relative; */
   display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-    margin: auto;
-    overflow: auto;
+  height: 100%;
+  vertical-align: middle;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  margin: auto;
+  overflow: auto;
 }
 
 #modal__image__bg {
-  margin: 75px;
-    border: 1px solid black;
-    background: white;
-    border-radius: 5px;
-    padding: 50px;
-    width: 80%;
-    box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
-    box-sizing: border-box;
-    max-width: 1090px;
-    min-height: 400px;
-    position: relative;
-
+  margin: 100px;
+  border: 1px solid #e6e4e4;
+  background: white;
+  border-radius: 5px;
+  padding: 50px;
+  width: 85%;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
+  box-sizing: border-box;
+  max-width: 1090px;
+  min-height: 500px;
+  position: relative;
 }
 
 .modal__image {
@@ -111,16 +91,14 @@
 }
 
 button {
-  border: 1px solid black;
+  border: 1px solid #c6c6c626;
   width: 100px;
   height: 40px;
   padding: 10px;
-  background-color: white;
   background-color: #9c9c9c42;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 14px;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
   margin: 20px;
   transition: all 0.2s ease;
 }
@@ -143,6 +121,7 @@ button:last-of-type {
 
   #title {
     margin-top: 15px;
+    font-size: 22px;
   }
 
   .btns-container {
@@ -164,7 +143,7 @@ button:last-of-type {
   #modal__image__bg {
     margin: 50px 0px;
     width: 95%;
-    min-height: none;
+    min-height: 0px;
   }
 }
 
@@ -198,36 +177,110 @@ figure {
 }
 
 @keyframes fadeIn {
-  from {opacity: 0}
-  to {opacity: 1}
+  from {opacity: .7;}
+  to {opacity: 1;}
 }
 
 .photo {
   margin: auto;
   border: 1px solid black;
+  border-color: #c3c3c3;
+  border-color: #989898;
+  border-color: #e6e4e4;
   border-radius: 5px;
   overflow: hidden;
-  opacity: 0;
-  animation: fadeIn .3s 1 ease;
-  animation-fill-mode: forwards;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.05); 
+  background: white;
+  background: #fcfcfc;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  height: var(--img-size);
+  width: var(--img-size);
+  /* opacity: .7; */
+  /* opacity: 1; */
+
 }
 
-.photo:nth-of-type(1) { animation-delay: 0.0s }
-.photo:nth-of-type(2) { animation-delay: 0.1s }
-.photo:nth-of-type(3) { animation-delay: 0.2s }
-.photo:nth-of-type(4) { animation-delay: 0.3s }
-.photo:nth-of-type(5) { animation-delay: 0.4s }
-.photo:nth-of-type(6) { animation-delay: 0.45s }
-.photo:nth-of-type(7) { animation-delay: 0.5s }
-.photo:nth-of-type(8) { animation-delay: 0.6s }
-.photo:nth-of-type(9) { animation-delay: 0.65s }
-.photo:nth-of-type(10) { animation-delay: 0.7s }
+.photo.loaded {
+  /* animation: fadeIn 0.3s 1 ease;
+  animation-fill-mode: forwards; */
+}
+
+.skeleton-thumbnail-container {
+  height: var(--img-size);
+  width: var(--img-size);
+  padding: 20px;
+  overflow: hidden;
+  margin: auto;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+.skeleton-thumbnail-container_p_absolute {
+  position: absolute;
+}
+
+.photo.loaded .skeleton-thumbnail-container {
+  display: none;
+}
+
+.skeleton-thumbnail {
+  background: linear-gradient(270deg, #000000, #ffffff);
+  background: linear-gradient(
+    270deg
+    , #d3d0d070, #ffffff);
+  background-size: 400% 400%;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  /* -webkit-animation: AnimationName 2s ease infinite;
+  -moz-animation: AnimationName 1s ease infinite; */
+  animation: AnimationName 1.25s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.photo.loaded:nth-of-type(1) { animation-delay: 0.05s }
+.photo.loaded:nth-of-type(2) { animation-delay: 0.1s }
+.photo.loaded:nth-of-type(3) { animation-delay: 0.15s }
+.photo.loaded:nth-of-type(4) { animation-delay: 0.2s }
+.photo.loaded:nth-of-type(5) { animation-delay: 0.25s }
+.photo.loaded:nth-of-type(6) { animation-delay: 0.3s }
+.photo.loaded:nth-of-type(7) { animation-delay: 0.325s }
+.photo.loaded:nth-of-type(8) { animation-delay: 0.35s }
+.photo.loaded:nth-of-type(9) { animation-delay: 0.375s }
+.photo.loaded:nth-of-type(10) { animation-delay: 0.4s }
 
 .photo:hover {
   box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
 }
 
 .photo__img {
+  display: none;
+}
+
+.photo.loaded  .photo__img {
+  display: block;
   height: var(--img-size);
   width: var(--img-size);
   box-sizing: border-box;
@@ -235,10 +288,9 @@ figure {
   transition: .3s transform ease;
   cursor: pointer;
   border-radius: 25px;
- 
 }
 
-.photo__img:hover {
+.photo.loaded  .photo__img:hover {
   transform: scale(1.075);
 }
 
@@ -249,8 +301,6 @@ figure {
 }
 
 .btns-container {
-  /* width: 100%; */
-    /* justify-content: center; */
     display: flex;
 }
 
