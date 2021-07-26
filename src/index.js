@@ -45,8 +45,9 @@ const addThumbnailsInLoadingState = (thumbnailsPerPage) => {
   const skeletonThumbnail = document.createElement('div');
   skeletonThumbnail.className = "skeleton-thumbnail";
 
-
   skeletonThumbnail.style.animationDelay = `${num * 100}ms`;
+
+  photo.style.animationDelay = `${num * 50}ms`
   skeletonThumbnailContainer.append(skeletonThumbnail);
 
   const photoImg = document.createElement('img');
@@ -130,7 +131,7 @@ const runCode = async () => {
   // If there are less images than the max amount per page, we have to make sure no images
   // are perpetually displaying in the loading state, so we hide these elements
     if (images.length < imagesPerPage) {
-      for (let i = images.length; i < 10; i++) {
+      for (let i = images.length; i < imagesPerPage; i++) {
         const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
         photo.classList.add('fade-out');
       }
@@ -143,7 +144,7 @@ const runCode = async () => {
   }
 
   const upDatePaginationBtnsEnabledState = () => {
-    setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= 10)
+    setButtonEnabledStatusAfterPageChange(nextBtn, images.length >= imagesPerPage)
     setButtonEnabledStatusAfterPageChange(previousBtn, currentPage > 1)
   }
 
@@ -156,7 +157,7 @@ const runCode = async () => {
     upDatePaginationBtnsEnabledState();
     
     resetImagesToLoadingState();
-    addThumbnailsInLoadingState(10)
+    addThumbnailsInLoadingState(imagesPerPage)
     await fetchImagesAndRenderToDom();
     upDatePaginationBtnsEnabledState();
   }
@@ -176,9 +177,6 @@ const runCode = async () => {
   })
 
   updateStateFetchAndRenderImages();
-
-  // await fetchImagesAndRenderToDom();
-  // upDatePaginationBtnsEnabledState();
 
   const modalOverlayElem = document.querySelector('.modal-overlay');
 
