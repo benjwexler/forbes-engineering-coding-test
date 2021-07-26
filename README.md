@@ -26,7 +26,13 @@
     * Presumably, this is because I've asked the browser to load multiple images in the background, instead of focusing specifically on the image that the user has clicked on.
     * One solution to this problem would be to add skeleton loaders to the modal images.
 
-# Testing
+## Testing
 
 * I only implemented two tests for the app. Both are for a function I created to fetch the images.
 * run `npm run test` to execute the tests.
+
+# Future Improvements
+
+* I didn't do much in the way of error handling for the UI, except for displaying an alert to the user letting them know to refresh the page
+* I didn't add any UI notice for the situation when the request was sucessful, but there are no images to display.
+  * Right now, the user will just encounter a blank photo section after the loaders have disappeared.
