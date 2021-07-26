@@ -44,7 +44,9 @@ const addThumbnailsInLoadingState = (thumbnailsPerPage) => {
   
   const skeletonThumbnail = document.createElement('div');
   skeletonThumbnail.className = "skeleton-thumbnail";
-  skeletonThumbnail.style.animationDelay = `0.${num}s`;
+
+
+  skeletonThumbnail.style.animationDelay = `${num * 100}ms`;
   skeletonThumbnailContainer.append(skeletonThumbnail);
 
   const photoImg = document.createElement('img');
