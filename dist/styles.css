@@ -8,6 +8,16 @@
   padding: 0;
 }
 
+.header-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: auto;
+  margin-bottom: 40px;
+  max-width: 1200px;
+  width: 90%;
+}
+
 .d-none {
   display: none !important;
 }
@@ -44,7 +54,7 @@
   text-align: center;
 }
 
-.modal__image__container {
+.modal-image-container {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -57,28 +67,28 @@
   overflow: auto;
 }
 
-#modal__image__bg {
+#modal-image-bg {
   margin: 100px;
   border: 1px solid #e6e4e4;
   background: white;
   border-radius: 5px;
   padding: 50px;
   width: 85%;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
+  box-shadow: 0px 3px 15px #00000033; 
   box-sizing: border-box;
   max-width: 1090px;
   min-height: 500px;
   position: relative;
 }
 
-.modal__image {
+.modal-image {
   vertical-align: middle;
-    margin: auto;
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 1000px;
-    object-fit: contain;
-    height: 100%;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  object-fit: contain;
 }
 
 #title {
@@ -86,84 +96,30 @@
   margin-left: 0;
 }
 
-.header-container {
-  flex-wrap: wrap;
-}
-
-button {
+.btn-change-page {
   border: 1px solid #c6c6c626;
-  width: 100px;
   height: 40px;
+  width: 100px;
+  margin: 20px;
   padding: 10px;
   background-color: #9c9c9c42;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 14px;
-  margin: 20px;
   transition: all 0.2s ease;
 }
 
-button:hover:not(button:disabled) {
+.btn-change-page:hover:not(.btn-change-page:disabled) {
   background-color: black;
   color: white;
   cursor: pointer;
 }
 
-button:last-of-type {
+.btn-change-page:last-of-type {
   margin-right: 0px;
 }
 
-@media only screen and (max-width: 800px) {
-
-  :root {
-    --img-size: 150px;
-  }
-
-  #title {
-    margin-top: 15px;
-    font-size: 22px;
-  }
-
-  .btns-container {
-    width: 100%;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  button {
-    width: 100px;
-    height: 40px;
-    margin: 0 20px;
-  }
-
-  button:last-of-type {
-    margin-right: 20px;
-  }
-
-  #modal__image__bg {
-    margin: 50px 0px;
-    width: 95%;
-    min-height: 0px;
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  :root {
-    --img-size: 130px;
-  }
-}
-
-figure {
-  margin: 0 auto;
-  margin-block-start: unset;
-  margin-block-end: unset;
-    margin-inline-start: unset;
-    margin-inline-end: unset;
-
-}
-
-#images--container {
-  /* width: 450px; */
+#images-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--img-size));
   justify-content: center;
@@ -171,9 +127,6 @@ figure {
   max-width: 1200px;
   width: 90%;
   margin: auto;
-/* 
-  display: flex;
-  flex-wrap: wrap; */
 }
 
 @keyframes fadeIn {
@@ -197,14 +150,6 @@ figure {
   position: relative;
   height: var(--img-size);
   width: var(--img-size);
-  /* opacity: .7; */
-  /* opacity: 1; */
-
-}
-
-.photo.loaded {
-  /* animation: fadeIn 0.3s 1 ease;
-  animation-fill-mode: forwards; */
 }
 
 .skeleton-thumbnail-container {
@@ -220,66 +165,47 @@ figure {
   display: block;
 }
 
-.skeleton-thumbnail-container_p_absolute {
-  position: absolute;
-}
-
 .photo.loaded .skeleton-thumbnail-container {
   display: none;
 }
 
 .skeleton-thumbnail {
-  background: linear-gradient(270deg, #000000, #ffffff);
-  background: linear-gradient(
-    270deg
-    , #d3d0d070, #ffffff);
+  background: linear-gradient(270deg, #d3d0d070, #ffffff);
   background-size: 400% 400%;
   height: 100%;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
-
-  /* -webkit-animation: AnimationName 2s ease infinite;
-  -moz-animation: AnimationName 1s ease infinite; */
-  animation: AnimationName 1.25s ease infinite;
+  -webkit-animation: SkeletonThumbnail 1.5s ease infinite;
+  -moz-animation: SkeletonThumbnail 1.5s ease infinite;
+  animation: SkeletonThumbnail 1.55s ease infinite;
 }
 
-@-webkit-keyframes AnimationName {
+@-webkit-keyframes SkeletonThumbnail {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-@-moz-keyframes AnimationName {
+@-moz-keyframes SkeletonThumbnail {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-@keyframes AnimationName {
+@keyframes SkeletonThumbnail {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-
-.photo.loaded:nth-of-type(1) { animation-delay: 0.05s }
-.photo.loaded:nth-of-type(2) { animation-delay: 0.1s }
-.photo.loaded:nth-of-type(3) { animation-delay: 0.15s }
-.photo.loaded:nth-of-type(4) { animation-delay: 0.2s }
-.photo.loaded:nth-of-type(5) { animation-delay: 0.25s }
-.photo.loaded:nth-of-type(6) { animation-delay: 0.3s }
-.photo.loaded:nth-of-type(7) { animation-delay: 0.325s }
-.photo.loaded:nth-of-type(8) { animation-delay: 0.35s }
-.photo.loaded:nth-of-type(9) { animation-delay: 0.375s }
-.photo.loaded:nth-of-type(10) { animation-delay: 0.4s }
 
 .photo:hover {
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2); 
+  box-shadow: 0px 3px 15px #00000033; 
 }
 
-.photo__img {
+.photo-img {
   display: none;
 }
 
-.photo.loaded  .photo__img {
+.photo.loaded  .photo-img {
   display: block;
   height: var(--img-size);
   width: var(--img-size);
@@ -290,17 +216,51 @@ figure {
   border-radius: 25px;
 }
 
-.photo.loaded  .photo__img:hover {
+.photo.loaded  .photo-img:hover {
   transform: scale(1.075);
-}
-
-.hidden {
-  visibility: hidden;
-  margin: 0 5px;
-  height: 0;
 }
 
 .btns-container {
     display: flex;
+}
+
+@media only screen and (max-width: 800px) {
+
+  :root {
+    --img-size: 150px;
+  }
+
+  #title {
+    margin-top: 15px;
+    font-size: 22px;
+  }
+
+  .btns-container {
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .btn-change-page {
+    width: 100px;
+    height: 40px;
+    margin: 0 20px;
+  }
+
+  .btn-change-page:last-of-type {
+    margin-right: 20px;
+  }
+
+  #modal-image-bg {
+    margin: 50px 0px;
+    width: 95%;
+    min-height: 0px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  :root {
+    --img-size: 130px;
+  }
 }
 
