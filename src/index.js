@@ -35,32 +35,32 @@ export const fetchImages = async ({ page }) => {
 const addThumbnailsInLoadingState = (thumbnailsPerPage) => {
 
   const createThumbnail = (num) => {
-  const photo = document.createElement('div');
-  photo.className="photo";
-  photo.setAttribute('data-photo-num', num);
-  
-  const skeletonThumbnailContainer = document.createElement('div');
-  skeletonThumbnailContainer.className = "skeleton-thumbnail-container";
-  
-  const skeletonThumbnail = document.createElement('div');
-  skeletonThumbnail.className = "skeleton-thumbnail";
+    const photo = document.createElement('div');
+    photo.className = "photo";
+    photo.setAttribute('data-photo-num', num);
 
-  skeletonThumbnail.style.animationDelay = `${num * 100}ms`;
+    const skeletonThumbnailContainer = document.createElement('div');
+    skeletonThumbnailContainer.className = "skeleton-thumbnail-container";
 
-  photo.style.animationDelay = `${num * 50}ms`
-  skeletonThumbnailContainer.append(skeletonThumbnail);
+    const skeletonThumbnail = document.createElement('div');
+    skeletonThumbnail.className = "skeleton-thumbnail";
 
-  const photoImg = document.createElement('img');
-  photoImg.className="photo-img";
+    skeletonThumbnail.style.animationDelay = `${num * 100}ms`;
 
-  photo.append(skeletonThumbnailContainer)
-  photo.append(photoImg)
+    photo.style.animationDelay = `${num * 50}ms`
+    skeletonThumbnailContainer.append(skeletonThumbnail);
 
-  document.getElementById('images-container').append(photo);
+    const photoImg = document.createElement('img');
+    photoImg.className = "photo-img";
+
+    photo.append(skeletonThumbnailContainer)
+    photo.append(photoImg)
+
+    document.getElementById('images-container').append(photo);
 
   }
 
-  for(let i = 1; i <= thumbnailsPerPage; i++) {
+  for (let i = 1; i <= thumbnailsPerPage; i++) {
     createThumbnail(i)
   }
 }
@@ -73,68 +73,74 @@ const runCode = async () => {
   const previousBtn = document.getElementById('btn--previous');
 
   const fetchImagesAndRenderToDom = async () => {
-    latestFetchTimestamp = Date.now();
-    const currentTimestamp = latestFetchTimestamp;
-    const fetchedImages = await fetchImages({ page: currentPage });
-    if (!fetchedImages.ok) return;
+    try {
+      latestFetchTimestamp = Date.now();
+      const currentTimestamp = latestFetchTimestamp;
+      const fetchedImages = await fetchImages({ page: currentPage });
+      if (!fetchedImages.ok) return { ok: false };
 
-    // If these values are different it means another request has occured while we were
-    // awaiting this one, and that means its stale, so let's return early and do nothing
-    if (currentTimestamp !== latestFetchTimestamp) return;
+      // If these values are different it means another request has occured while we were
+      // awaiting this one, and that means its stale, so let's return early and do nothing
+      if (currentTimestamp !== latestFetchTimestamp) return;
 
-    images = fetchedImages.collection;
+      images = fetchedImages.collection;
 
-    const createHiddenModalImage = (_image) => {
-      const modalImageBg = document.getElementById('modal-image-bg');
-      const modalImg = document.createElement('img');
-      modalImg.classList.add('modal-image');
-      modalImg.classList.add('d-none');
-      modalImg.src = _image.largeImageURL;
-      modalImg.setAttribute('data-img-id', _image.id);
-      modalImageBg.append(modalImg);
-    };
-
-    images.forEach((image, i) => {
-      const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
-      photo.setAttribute('data-img-id', image.id);
-      const img = photo.querySelector(".photo-img");
-      img.src = image.previewURL;
-      img.onload = function (ev) {
-        photo.classList.add('loaded');
+      const createHiddenModalImage = (_image) => {
+        const modalImageBg = document.getElementById('modal-image-bg');
+        const modalImg = document.createElement('img');
+        modalImg.classList.add('modal-image');
+        modalImg.classList.add('d-none');
+        modalImg.src = _image.largeImageURL;
+        modalImg.setAttribute('data-img-id', _image.id);
+        modalImageBg.append(modalImg);
       };
-      photo.onclick = (ev) => {
-        const modalImages = document.querySelectorAll('.modal-image');
-        modalImages.forEach(image => {
-          image.classList.add('d-none');
-        })
-        // img hasn't loaded so don't show the modal
-        if(!ev.currentTarget.classList.contains('loaded')) return;
-        document.querySelector('.modal-overlay').classList.remove("d-none");
-        const imgId = ev.currentTarget.dataset.imgId;
 
-        modalImages.forEach(image => {
-          const isSelectedImg = image.dataset.imgId === imgId;
-
-          if (isSelectedImg) {
-            image.classList.remove('d-none');
-          }
-        })
-      }
-      
-      // For every thumbnail we are going to create a matching img element inside in the modal
-      // Each modal img will be hidden untill it is selected
-      // We are creating the images at the same time the thumbnail is rendered, so the modal img
-      // doesn't have to load when the modal is open and can be loaded behind the scenes
-      createHiddenModalImage(image);
-    })
-
-  // If there are less images than the max amount per page, we have to make sure no images
-  // are perpetually displaying in the loading state, so we hide these elements
-    if (images.length < imagesPerPage) {
-      for (let i = images.length; i < imagesPerPage; i++) {
+      images.forEach((image, i) => {
         const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
-        photo.classList.add('fade-out');
+        photo.setAttribute('data-img-id', image.id);
+        const img = photo.querySelector(".photo-img");
+        img.src = image.previewURL;
+        img.onload = function (ev) {
+          photo.classList.add('loaded');
+        };
+        photo.onclick = (ev) => {
+          const modalImages = document.querySelectorAll('.modal-image');
+          modalImages.forEach(image => {
+            image.classList.add('d-none');
+          })
+          // img hasn't loaded so don't show the modal
+          if (!ev.currentTarget.classList.contains('loaded')) return;
+          document.querySelector('.modal-overlay').classList.remove("d-none");
+          const imgId = ev.currentTarget.dataset.imgId;
+
+          modalImages.forEach(image => {
+            const isSelectedImg = image.dataset.imgId === imgId;
+
+            if (isSelectedImg) {
+              image.classList.remove('d-none');
+            }
+          })
+        }
+
+        // For every thumbnail we are going to create a matching img element inside in the modal
+        // Each modal img will be hidden untill it is selected
+        // We are creating the images at the same time the thumbnail is rendered, so the modal img
+        // doesn't have to load when the modal is open and can be loaded behind the scenes
+        createHiddenModalImage(image);
+      })
+
+      // If there are less images than the max amount per page, we have to make sure no images
+      // are perpetually displaying in the loading state, so we hide these elements
+      if (images.length < imagesPerPage) {
+        for (let i = images.length; i < imagesPerPage; i++) {
+          const photo = document.querySelector(`[data-photo-num='${i + 1}']`);
+          photo.classList.add('fade-out');
+        }
       }
+
+      return { ok: true }
+    } catch (err) {
+      return { ok: false };
     }
   }
 
@@ -155,10 +161,15 @@ const runCode = async () => {
 
   const updateStateFetchAndRenderImages = async () => {
     upDatePaginationBtnsEnabledState();
-    
+
     resetImagesToLoadingState();
-    addThumbnailsInLoadingState(imagesPerPage)
-    await fetchImagesAndRenderToDom();
+    addThumbnailsInLoadingState(imagesPerPage);
+
+    const fetchAndRender = await fetchImagesAndRenderToDom();
+
+    if (!fetchAndRender.ok) { 
+      alert('Uh oh, there was an error. Please refresh the page.')
+    }
     upDatePaginationBtnsEnabledState();
   }
 
@@ -175,8 +186,6 @@ const runCode = async () => {
     }
     updateStateFetchAndRenderImages();
   })
-
-  updateStateFetchAndRenderImages();
 
   const modalOverlayElem = document.querySelector('.modal-overlay');
 
