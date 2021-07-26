@@ -34,6 +34,7 @@
   border: 1px solid transparent;
   padding: 5px;
   transition: all 0.2s linear;
+  background: inherit;
 }
 
 .btn-close-modal:hover {
@@ -153,6 +154,8 @@
 }
 
 .fade-out {
+  -webkit-animation: fadeOut 1s 1 ease;
+  -moz-animation: fadeOut 1s 1 ease;
   animation: fadeOut 1s 1 ease;
   animation-fill-mode: forwards; 
   
@@ -182,22 +185,22 @@
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
-  -webkit-animation: SkeletonThumbnail 1.5s ease infinite;
-  -moz-animation: SkeletonThumbnail 1.5s ease infinite;
-  animation: SkeletonThumbnail 1.55s ease infinite;
+  -webkit-animation: skeleton-thumbnail-animation 1.5s ease infinite;
+  -moz-animation: skeleton-thumbnail-animation 1.5s ease infinite;
+  animation: skeleton-thumbnail-animation 1.55s ease infinite;
 }
 
-@-webkit-keyframes SkeletonThumbnail {
+@-webkit-keyframes skeleton-thumbnail-animation {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-@-moz-keyframes SkeletonThumbnail {
+@-moz-keyframes skeleton-thumbnail-animation {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-@keyframes SkeletonThumbnail {
+@keyframes skeleton-thumbnail-animation {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
