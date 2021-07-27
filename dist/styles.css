@@ -215,7 +215,7 @@
 }
 
 .photo:hover {
-  box-shadow: 0px 3px 15px #00000033; 
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); 
 }
 
 .photo-img {
