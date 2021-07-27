@@ -95,6 +95,7 @@
 #title {
   margin: auto;
   margin-left: 0;
+  font-size: 30px;
 }
 
 .btn-change-page {
@@ -241,6 +242,24 @@
     display: flex;
 }
 
+@media only screen and (max-width: 920px) {
+
+  #title {
+    margin-top: 15px;
+    font-size: 22px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btns-container {
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+}
+
 @media only screen and (max-width: 800px) {
 
   :root {
@@ -248,14 +267,8 @@
   }
 
   #title {
-    margin-top: 15px;
-    font-size: 22px;
-  }
-
-  .btns-container {
-    width: 100%;
-    justify-content: center;
-    margin-top: 20px;
+    width: 200px;
+    
   }
 
   .btn-change-page {
