@@ -81,7 +81,7 @@ const runCode = async () => {
 
       // If these values are different it means another request has occured while we were
       // awaiting this one, and that means its stale, so let's return early and do nothing
-      if (currentTimestamp !== latestFetchTimestamp) return;
+      if (currentTimestamp !== latestFetchTimestamp) return { ok: false, isStale: true };
 
       images = fetchedImages.collection;
 
@@ -166,6 +166,8 @@ const runCode = async () => {
     addThumbnailsInLoadingState(imagesPerPage);
 
     const fetchAndRender = await fetchImagesAndRenderToDom();
+
+    if(fetchAndRender.isStale) return;
 
     if (!fetchAndRender.ok) { 
       alert('Uh oh, there was an error. Please refresh the page.')
