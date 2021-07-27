@@ -1,9 +1,9 @@
 
-import { fireEvent, getByText, waitFor } from '@testing-library/dom'
-import '@testing-library/jest-dom/extend-expect'
-import { JSDOM } from 'jsdom'
-import fs from 'fs'
-import path from 'path'
+import { fireEvent, getByText, waitFor } from '@testing-library/dom';
+import '@testing-library/jest-dom/extend-expect';
+import { JSDOM } from 'jsdom';
+import fs from 'fs';
+import path from 'path';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { fetchImages } from "./index.js";
@@ -12,6 +12,25 @@ const html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf
 
 let dom
 let container
+
+describe('Testing index.html has rendered correctly', () => {
+
+  beforeEach(() => {
+    dom = new JSDOM(html);
+    container = dom.window.document.body;
+  })
+
+  it('Pagination buttons rendered and are disabled to start', () => {
+    expect(getByText(container, 'Previous').closest('button')).toBeDisabled();
+    expect(getByText(container, 'Next').closest('button')).toBeDisabled();
+  })
+
+  it('renders the correct title', () => {
+    expect(container.querySelector('h1')).not.toBeNull()
+    expect(getByText(container, 'Forbes Engineering Coding Challenge')).toBeInTheDocument()
+  })
+
+})
 
 const mockResImagesCollection = [
   {
@@ -78,7 +97,7 @@ describe('Testing fetchImage', () => {
   })
 
   it('Fetch Image API handles bad request', async () => {
-    
+
     global.fetch = (() =>
       Promise.resolve({
         json: () => Promise.reject(),
@@ -87,12 +106,5 @@ describe('Testing fetchImage', () => {
 
     const imagesRes = await fetchImages({ page: 1 });
     expect(imagesRes.ok).toBe(false);
-  })
-})
-
-describe('Testing index.html', () => {
-  beforeEach(async () => {
-    dom = new JSDOM(html)
-    container = dom.window.document.body
   })
 })
