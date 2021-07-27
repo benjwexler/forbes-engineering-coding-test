@@ -28,7 +28,7 @@
 
 ## Testing
 
-* I only implemented two tests for the app. Both are for a function I created to fetch the images.
+* I only implemented four tests for the app. Two are for a function I created to fetch the images, and the other two are for testing the initial HTML rendered to the DOM
 * run `npm run test` to execute the tests.
 
 # Future Improvements
